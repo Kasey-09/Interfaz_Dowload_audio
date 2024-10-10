@@ -3,6 +3,7 @@ from tkinter import font,messagebox,filedialog
 from pytubefix import YouTube
 from pytubefix.cli import on_progress
 from PIL import Image, ImageTk
+from requests import delete
 
 
  
@@ -25,10 +26,16 @@ def main():
             nombre_archivo = f'{yt.title}_audio.{yt_filter.mime_type.split('/')[-1]}'
             yt_filter.download(ruta,nombre_archivo,mp3=True)
             lbl4.config(text='¡Descarga exitosa!',fg='green')
+            ety1.delete(0,END)
+            ety2.delete(0,END)
+            ety1.focus()
             
 
         except Exception:
-            lbl4.config(text='Error',fg='red')
+            lbl4.config(text='Error, Algún dato es inválido.',fg='red')
+            ety1.delete(0,END)
+            ety2.delete(0,END)
+            ety1.focus()
 
     def verificacion():
 
@@ -38,6 +45,8 @@ def main():
             ruta_guardar = filedialog.askdirectory()
             dowload(url,ruta_guardar)
             ety2.insert(0,ruta_guardar)
+
+
         
         
 
@@ -76,7 +85,7 @@ def main():
     btn1.place(relx=.5,rely=.9,anchor=CENTER)
 
 
-    lbl4 = Label(root,text='Hola',font=('roboto',20,'bold'))
+    lbl4 = Label(root,text='',font=('roboto',20,'bold'))
     lbl4.pack(side=BOTTOM)
 
 
